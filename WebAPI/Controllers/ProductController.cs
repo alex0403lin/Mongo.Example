@@ -7,14 +7,14 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class DataController : ControllerBase
+public class ProductController : ControllerBase
 {
-    private readonly ILogger<DataController> _logger;
+    private readonly ILogger<ProductController> _logger;
 
     private readonly IMongoRepository<Product> _productMongoRepository;
 
-    public DataController(
-        ILogger<DataController> logger,
+    public ProductController(
+        ILogger<ProductController> logger,
         IMongoRepository<Product> productsMongoRepository)
     {
         _logger = logger;
@@ -63,9 +63,7 @@ public class DataController : ControllerBase
     {
         var entity = await _productMongoRepository.DeleteAsync(new Product()
         {
-            Id = model.Id,
-            Name = model.Name,
-            Price = model.Price
+            Id = model.Id
         });
 
         return new JsonResult(new ResponseResult<Product>(entity != null, entity));

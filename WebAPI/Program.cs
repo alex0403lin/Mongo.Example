@@ -17,6 +17,7 @@ AppSettings.Init(builder.Services, builder.Configuration);
 builder.Services.AddScoped<IMongoProvider, MongoProvider>();
 builder.Services.AddScoped<IMongoContext, MongoContext>();
 builder.Services.AddScoped<IMongoRepository<Product>, MongoRepository<Product>>();
+builder.Services.AddScoped<IMongoRepository<Order>, MongoRepository<Order>>();
 
 var app = builder.Build();
 

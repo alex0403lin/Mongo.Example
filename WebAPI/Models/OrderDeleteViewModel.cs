@@ -1,6 +1,6 @@
 namespace WebAPI.Models
 {
-    public class ProductDeleteViewModel
+    public class OrderDeleteViewModel
     {
         public string Id { get; set; }
     }
