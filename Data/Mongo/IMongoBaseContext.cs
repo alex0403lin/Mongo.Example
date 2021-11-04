@@ -2,7 +2,7 @@ using MongoDB.Driver;
 
 namespace Data.Mongo
 {
-    public interface IMongoContext
+    public interface IMongoBaseContext
     {
         IMongoClient Client { get; }
 

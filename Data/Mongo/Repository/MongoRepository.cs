@@ -7,7 +7,7 @@ namespace Data.Mongo.Repository
     public class MongoRepository<TEntity> : IMongoRepository<TEntity> where TEntity : BaseModel
     {
         protected IMongoCollection<TEntity> _collection;
-        private IMongoContext _context;
+        private IMongoBaseContext _context;
 
         public IMongoCollection<TEntity> Collection
         {
@@ -17,7 +17,7 @@ namespace Data.Mongo.Repository
             }
         }
 
-        public MongoRepository(IMongoContext context)
+        public MongoRepository(IMongoBaseContext context)
         {
             _context = context;
             _collection = context.Database.GetCollection<TEntity>(typeof(TEntity).Name);
