@@ -1,11 +1,12 @@
 using Data.Models;
 using Data.Mongo.Repository;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 public class DataController : ControllerBase
 {
     private readonly ILogger<DataController> _logger;
@@ -24,5 +25,49 @@ public class DataController : ControllerBase
     public async Task<List<Product>> GetAll()
     {
         return await _productMongoRepository.GetAllAsync();
+    }
+
+    [HttpGet]
+    public async Task<Product> GetById(string id)
+    {
+        return await _productMongoRepository.GetByIdAsync(id);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Insert([FromBody] ProductAddViewModel model)
+    {
+        var entity = await _productMongoRepository.InsertAsync(new Product()
+        {
+            Name = model.Name,
+            Price = model.Price
+        });
+
+        return new JsonResult(new ResponseResult<Product>(entity != null, entity));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update([FromBody] ProductEditViewModel model)
+    {
+        var entity = await _productMongoRepository.UpdateAsync(new Product()
+        {
+            Id = model.Id,
+            Name = model.Name,
+            Price = model.Price
+        });
+
+        return new JsonResult(new ResponseResult<Product>(entity != null, entity));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete([FromBody] ProductDeleteViewModel model)
+    {
+        var entity = await _productMongoRepository.DeleteAsync(new Product()
+        {
+            Id = model.Id,
+            Name = model.Name,
+            Price = model.Price
+        });
+
+        return new JsonResult(new ResponseResult<Product>(entity != null, entity));
     }
 }
